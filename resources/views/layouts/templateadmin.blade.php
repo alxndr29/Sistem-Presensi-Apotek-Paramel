@@ -37,6 +37,8 @@
     <link href="{{asset('gentelella-master/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.cs')}}s" rel="stylesheet">
     <link href="{{asset('gentelella-master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
+
 </head>
 
 <body class="nav-md">
@@ -136,8 +138,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)">
-                                        <i class="fa fa-laptop"></i> Landing Page
+                                    <a href="{{route('admin.periodepresensi')}}">
+                                        <i class="fa fa-laptop"></i> Periode Presensi
                                     </a>
                                 </li>
                             </ul>
@@ -175,11 +177,18 @@
                         <ul class=" navbar-right">
                             <li class="nav-item dropdown open" style="padding-left: 15px;">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{asset('gentelella-master/production/images/img.jpg')}}" alt="">John Doe
+                                    <img src="{{asset('gentelella-master/production/images/img.jpg')}}" alt="">{{Auth::user()->name}}
                                 </a>
                                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                     <button class="dropdown-item" href="javascript:;" data-toggle="modal" data-target="#exampleModal"> Profile </button>
-                                    <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    <!-- <a class="dropdown-item" href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a> -->
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-sign-out pull-right"></i> Log Out
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                                 </div>
                             </li>
                         </ul>
@@ -281,6 +290,9 @@
     <script src="{{asset('gentelella-master/vendors/pdfmake/build/vfs_fonts.js')}}"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{asset('gentelella-master/build/js/custom.min.js')}}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
@@ -288,12 +300,24 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // $('#datatable').DataTable();
-        $('#datatable-pegawai').DataTable({
-            // dom: 'lBfrtip'
-            // // ,
-            // // buttons: [
-            // // //    'excel'
-            // // ]
+        $('#datetimepicker1').datetimepicker({
+            minDate: new Date(),
+            format: 'DD/MM/YYYY HH:mm'
+
         });
+
+        $('#datatable-pegawai').DataTable({
+            "lengthChange": false,
+            "bPaginate": false,
+            dom: 'lBfrtip',
+            buttons: [{
+                extend: 'excel',
+                className: 'btn btn-primary',
+                text: 'Export to Excel',
+                exportOptions: {
+                    columns: [0, 1, 2, 3]
+                }
+            }]
+        }).buttons().container().appendTo("#export-container");
     });
 </script>
