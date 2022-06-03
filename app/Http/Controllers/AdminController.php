@@ -20,6 +20,26 @@ class AdminController extends Controller
     }
     public function storePeriodePresensi(Request $request)
     {
+        try {
+            DB::beginTransaction();
+            DB::table('periode')->update(['aktif' => 0]);
+            $id_periode = DB::table('periode')->insertGetId(['jam_mulai' => $request->get('jam_mulai'), 'jam_akhir' => $request->get('jam_akhir'), 'aktif' => 1]);
+            $users = DB::table('users')->where('role', 'pegawai')->select('id')->get();
+            foreach ($users as $key => $value) {
+                DB::table('presensi')->insert([
+                    'users_id' => $value->id,
+                    'periode_idperiode' => $id_periode,
+                    'status' => 'Tidak Hadir',
+                    'jam_absen_masuk' => null,
+                    'jam_absen_keluar' => null
+                ]);
+            }
+            DB::commit();
+            return redirect('/periode')->with('sukses', 'Berhasil Menambah Data Periode');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect('/periode')->with('gagal', $e->getMessage());
+        }
         return $request->all();
     }
     public function pegawai()
@@ -81,5 +101,18 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return redirect('/pegawai')->with('gagal', $e->getMessage());
         }
+    }
+    public function laporan()
+    {
+        $data = DB::table('users')
+            ->join('presensi', 'users.id', '=', 'presensi.users_id')
+            ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
+            ->where('periode.aktif', 1)
+            ->where('users.role', 'pegawai')
+            ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*')
+            ->get();
+        // return $data;
+    
+        return view('admin.laporan', compact('data'));
     }
 }

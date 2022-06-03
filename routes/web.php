@@ -18,6 +18,9 @@ Route::get('/', function () {
     //return view('admin.index');
     return redirect('/home');
 });
+Route::get('/jamserver',function(){
+    return date('Y-m-d H:i');
+})->name('waktuserver');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 //Admin
@@ -28,4 +31,7 @@ Route::delete('/pegawai/destroy/{id}', 'AdminController@destroyPegawai')->name('
 Route::put('/pegawai/update/{id}', 'AdminController@updatePegawai')->name('admin.updatepegawai');
 Route::get('/periode', 'AdminController@periodePresensi')->name('admin.periodepresensi');
 Route::post('/periode/store','AdminController@storePeriodePresensi')->name('admin.storeperiode');
+Route::get('/laporan','AdminController@laporan')->name('admin.laporan');
 //Pegawai
+Route::get('/pegawai/home','PegawaiController@index')->name('pegawai.index');
+Route::get('/pegawai/presensimasuk','PegawaiController@presensiMasuk')->name('pegawai.presensimasuk');

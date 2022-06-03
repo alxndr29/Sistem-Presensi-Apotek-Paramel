@@ -133,7 +133,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)">
+                                    <a href="{{route('admin.laporan')}}">
                                         <i class="fa fa-laptop"></i> Laporan Presensi
                                     </a>
                                 </li>
@@ -172,6 +172,7 @@
                 <div class="nav_menu">
                     <div class="nav toggle">
                         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+
                     </div>
                     <nav class="nav navbar-nav">
                         <ul class=" navbar-right">
@@ -192,7 +193,6 @@
                                 </div>
                             </li>
                         </ul>
-
                     </nav>
                 </div>
             </div>
@@ -200,6 +200,7 @@
 
             <!-- page content -->
             <div class="right_col" role="main">
+                <div id="waktuserver" class="text-center"></div>
                 @yield('content')
             </div>
             <!-- /page content -->
@@ -299,13 +300,15 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        // $('#datatable').DataTable();
+
         $('#datetimepicker1').datetimepicker({
-            minDate: new Date(),
-            format: 'DD/MM/YYYY HH:mm'
-
+            // minDate: new Date(),
+            format: 'YYYY-MM-DD HH:mm'
         });
-
+        $('#datetimepicker2').datetimepicker({
+            // minDate: new Date(),
+            format: 'YYYY-MM-DD HH:mm'
+        });
         $('#datatable-pegawai').DataTable({
             "lengthChange": false,
             "bPaginate": false,
@@ -319,5 +322,22 @@
                 }
             }]
         }).buttons().container().appendTo("#export-container");
+        setInterval(() => {
+            jamserver();
+        }, 30000);
     });
+
+    function jamserver() {
+        $.ajax({
+            url: "{{route('waktuserver')}}",
+            type: 'GET',
+            success: function(data) {
+                $("#waktuserver").html('<b>' + 'Waktu Server: ' + data + '</b>');
+               
+            },
+            error: function() {
+                console.log(data);
+            }
+        });
+    }
 </script>

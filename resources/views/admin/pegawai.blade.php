@@ -117,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" required name="password" placeholder="Kosongi jika tidak merubah password">
+                        <input type="password" class="form-control" name="password" placeholder="Kosongi jika tidak merubah password">
                     </div>
                     <div class="form-group">
                         <label>Role</label>

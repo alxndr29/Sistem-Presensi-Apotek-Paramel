@@ -78,10 +78,19 @@
                 @method('post')
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Hello World</label>
+                        <label>Tanggal & Jam Awal Periode</label>
                         <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="a"/>
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="jam_mulai" />
                             <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal & Jam Akhir Periode</label>
+                        <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="jam_akhir" />
+                            <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 02, 2022 at 04:48 PM
+-- Generation Time: Jun 03, 2022 at 05:20 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -63,8 +63,20 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `periode` (
-  `idperiode` int(11) NOT NULL
+  `idperiode` int(11) NOT NULL,
+  `aktif` tinyint(4) NOT NULL DEFAULT '0',
+  `jam_mulai` datetime NOT NULL,
+  `jam_akhir` datetime NOT NULL,
+  `created_at` varchar(45) DEFAULT NULL,
+  `updated_at` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `periode`
+--
+
+INSERT INTO `periode` (`idperiode`, `aktif`, `jam_mulai`, `jam_akhir`, `created_at`, `updated_at`) VALUES
+(1, 1, '2022-06-04 00:00:00', '2022-06-04 23:59:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -74,8 +86,20 @@ CREATE TABLE `periode` (
 
 CREATE TABLE `presensi` (
   `users_id` bigint(20) UNSIGNED NOT NULL,
-  `periode_idperiode` int(11) NOT NULL
+  `periode_idperiode` int(11) NOT NULL,
+  `status` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jam_absen_masuk` datetime DEFAULT NULL,
+  `jam_absen_keluar` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `presensi`
+--
+
+INSERT INTO `presensi` (`users_id`, `periode_idperiode`, `status`, `jam_absen_masuk`, `jam_absen_keluar`) VALUES
+(3, 1, 'Hadir', '2022-06-04 00:09:54', NULL),
+(4, 1, 'Tidak Hadir', NULL, NULL),
+(5, 1, 'Tidak Hadir', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -103,7 +127,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `foto`, `deleted_at`) VALUES
 (2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', NULL, '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL),
-(3, 'Evan', 'evan@evan.com', NULL, '$2y$10$XqDFBZ14hqDG9AH.wwJr9.qgJqytua/izAXamwytGzjFPrKaDvFPC', NULL, NULL, '2022-06-02 14:46:15', 'pegawai', NULL, '2022-06-02 14:32:23');
+(3, 'Pegawai Satu', 'satu@satu.com', NULL, '$2y$10$XqDFBZ14hqDG9AH.wwJr9.qgJqytua/izAXamwytGzjFPrKaDvFPC', NULL, NULL, '2022-06-03 13:25:53', 'pegawai', NULL, '2022-06-02 14:32:23'),
+(4, 'Pegawai Dua', 'dua@dua.com', NULL, '$2y$10$WfmUTUJljpgSTTggVWGGiuDIp09gj3kRjRXotL.z2zdK3CYx0gXbK', NULL, '2022-06-03 13:26:17', '2022-06-03 13:26:17', 'pegawai', NULL, NULL),
+(5, 'Pegawai Tiga', 'tiga@tiga.com', NULL, '$2y$10$k.GlHG3wXw0GIACDVlZn2.ON2tr7.NJj7bhc9Gk4VRm8gjmijosLu', NULL, '2022-06-03 13:26:42', '2022-06-03 13:26:42', 'pegawai', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -159,10 +185,16 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `periode`
+--
+ALTER TABLE `periode`
+  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
