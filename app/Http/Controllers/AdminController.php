@@ -16,7 +16,11 @@ class AdminController extends Controller
     }
     public function periodePresensi()
     {
-        return view('admin.periode');
+        $periode_presensi = DB::table('periode')->orderBy('aktif','desc')->get();
+        return view('admin.periode',compact('periode_presensi'));
+    }
+    public function detailPeriodePresensi($id){
+        return view('admin.periodedetail');
     }
     public function storePeriodePresensi(Request $request)
     {
@@ -111,8 +115,7 @@ class AdminController extends Controller
             ->where('users.role', 'pegawai')
             ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*')
             ->get();
-        // return $data;
-    
-        return view('admin.laporan', compact('data'));
+        $periode = DB::table('periode')->where('aktif',1)->first();
+        return view('admin.laporan', compact('data','periode'));
     }
 }

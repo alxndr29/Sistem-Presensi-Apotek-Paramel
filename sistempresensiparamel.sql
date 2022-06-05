@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 03, 2022 at 05:20 PM
+-- Generation Time: Jun 05, 2022 at 08:33 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -97,7 +97,7 @@ CREATE TABLE `presensi` (
 --
 
 INSERT INTO `presensi` (`users_id`, `periode_idperiode`, `status`, `jam_absen_masuk`, `jam_absen_keluar`) VALUES
-(3, 1, 'Hadir', '2022-06-04 00:09:54', NULL),
+(3, 1, 'Hadir', '2022-06-04 00:09:54', '2022-06-05 12:35:17'),
 (4, 1, 'Tidak Hadir', NULL, NULL),
 (5, 1, 'Tidak Hadir', NULL, NULL);
 

@@ -1,6 +1,7 @@
 @extends('layouts.templatepegawai')
 
 @section('content')
+
 @if($periode_presensi == null)
 <div class="alert alert-danger alert-dismissible " role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
@@ -22,6 +23,13 @@
 </div>
 @endif
 
+@if( $status_presensi->status == "Hadir")
+<div class="alert alert-success alert-dismissible text-center" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+    </button>
+    <strong>Jam Kerja Hari Ini Sampai Pukul: {{$periode_presensi->jam_akhir}}</strong>
+</div>
+@endif
 
 <div class="row">
     <div class="col-md-3   widget widget_tally_box mx-auto">
@@ -50,13 +58,18 @@
                 <div class="row">
 
                     @if( $status_presensi->status == "Hadir")
-                    <h3 class="mx-auto"> Anda Tercatat Hadir </h3>
+                        @if($status_presensi->jam_absen_keluar == null)
+                            <h3 class="mx-auto"> Anda Tercatat Hadir </h3>
+                            <a href="{{route('pegawai.presensikeluar')}}" class="btn btn-primary mx-auto">KELUAR</a>
+                        @else
+                            <h3 class="mx-auto text-center">Sudah Melakukan Presensi Keluar</h3>
+                        @endif
                     @else
-                    @if($tombol_absen == true)
-                    <a href="{{route('pegawai.presensimasuk')}}" id="btnabsen" class="btn btn-primary mx-auto">ABSEN</a>
-                    @else
-                    <a href="{{route('pegawai.presensimasuk')}}" id="btnabsen" class="btn btn-primary mx-auto disabled">ABSEN</a>
-                    @endif
+                        @if($tombol_absen == true)
+                            <a href="{{route('pegawai.presensimasuk')}}" id="btnabsen" class="btn btn-primary mx-auto">ABSEN</a>
+                        @else
+                            <a href="{{route('pegawai.presensimasuk')}}" id="btnabsen" class="btn btn-primary mx-auto disabled">ABSEN</a>
+                        @endif
                     @endif
                 </div>
                 <p>

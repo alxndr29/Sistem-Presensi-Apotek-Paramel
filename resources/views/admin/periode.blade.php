@@ -40,15 +40,28 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama</th>
-                                                <th>Email</th>
-                                                <th>Role</th>
-                                                <th>Edit</th>
-                                                <th>Hapus</th>
+                                                <th>Status</th>
+                                                <th>Jam Mulai</th>
+                                                <th>Jam Akhir</th>
+                                                <th>Detail</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            @foreach ($periode_presensi as $key => $value)
+                                            <tr>
+                                                <td>{{$key+1}}</td>
+                                                @if ($value->aktif == 1)
+                                                    <td>Aktif</td>
+                                                @else
+                                                    <td>Tidak Aktif</td>
+                                                @endif
+                                                <td>{{$value->jam_mulai}}</td>
+                                                <td>{{$value->jam_akhir}}</td>
+                                                <td>
+                                                    <a href="{{route('admin.periodedetail',$value->idperiode)}}" class="btn btn-success">Detail</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
