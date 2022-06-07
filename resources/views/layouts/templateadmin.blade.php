@@ -309,18 +309,28 @@
             // minDate: new Date(),
             format: 'YYYY-MM-DD HH:mm'
         });
+        
         $('#datatable-pegawai').DataTable({
             "lengthChange": false,
             "bPaginate": false,
             dom: 'lBfrtip',
             buttons: [{
-                extend: 'excel',
-                className: 'btn btn-primary',
-                text: 'Export to Excel',
-                exportOptions: {
-                    columns: [0, 1, 2, 3]
+                    extend: 'excel',
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to Excel',
+                    exportOptions: {
+
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to PDF',
+                    exportOptions: {
+
+                    }
                 }
-            }]
+            ]
         }).buttons().container().appendTo("#export-container");
         setInterval(() => {
             jamserver();
@@ -333,7 +343,7 @@
             type: 'GET',
             success: function(data) {
                 $("#waktuserver").html('<b>' + 'Waktu Server: ' + data + '</b>');
-               
+
             },
             error: function() {
                 console.log(data);
@@ -341,3 +351,4 @@
         });
     }
 </script>
+<!-- // columns: [0, 1, 2, 3] -->

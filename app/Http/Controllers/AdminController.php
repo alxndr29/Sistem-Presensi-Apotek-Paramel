@@ -46,6 +46,9 @@ class AdminController extends Controller
         }
         return $request->all();
     }
+    public function updateDataPresensi(Request $request, $iduser, $idperiode){
+        return $iduser. "/".$idperiode;
+    }
     public function pegawai()
     {
         $data_pegawai = DB::table('users')->get();
@@ -113,8 +116,9 @@ class AdminController extends Controller
             ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
             ->where('periode.aktif', 1)
             ->where('users.role', 'pegawai')
-            ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*')
+            ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
             ->get();
+        // return $data;
         $periode = DB::table('periode')->where('aktif',1)->first();
         return view('admin.laporan', compact('data','periode'));
     }

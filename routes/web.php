@@ -18,7 +18,7 @@ Route::get('/', function () {
     //return view('admin.index');
     return redirect('/home');
 });
-Route::get('/jamserver',function(){
+Route::get('/jamserver', function () {
     return date('Y-m-d H:i');
 })->name('waktuserver');
 Auth::routes();
@@ -30,10 +30,11 @@ Route::post('/pegawai/store', 'AdminController@storePegawai')->name('admin.store
 Route::delete('/pegawai/destroy/{id}', 'AdminController@destroyPegawai')->name('admin.destroypegawai');
 Route::put('/pegawai/update/{id}', 'AdminController@updatePegawai')->name('admin.updatepegawai');
 Route::get('/periode', 'AdminController@periodePresensi')->name('admin.periodepresensi');
-Route::get('/periode/detail/{id}','AdminController@detailPeriodePresensi')->name('admin.periodedetail');
-Route::post('/periode/store','AdminController@storePeriodePresensi')->name('admin.storeperiode');
-Route::get('/laporan','AdminController@laporan')->name('admin.laporan');
+Route::get('/periode/detail/{id}', 'AdminController@detailPeriodePresensi')->name('admin.periodedetail');
+Route::post('/periode/store', 'AdminController@storePeriodePresensi')->name('admin.storeperiode');
+Route::get('/laporan', 'AdminController@laporan')->name('admin.laporan');
+Route::put('/presensi/update/{iduser}/{idperiode}', 'AdminController@updateDataPresensi')->name('admin.ubahdatapresensi');
 //Pegawai
-Route::get('/pegawai/home','PegawaiController@index')->name('pegawai.index');
-Route::get('/pegawai/presensimasuk','PegawaiController@presensiMasuk')->name('pegawai.presensimasuk');
-Route::get('/pegawai/presensikeluar','PegawaiController@presensiKeluar')->name('pegawai.presensikeluar');
+Route::get('/pegawai/home', 'PegawaiController@index')->name('pegawai.index');
+Route::get('/pegawai/presensimasuk', 'PegawaiController@presensiMasuk')->name('pegawai.presensimasuk');
+Route::get('/pegawai/presensikeluar', 'PegawaiController@presensiKeluar')->name('pegawai.presensikeluar');
