@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 05, 2022 at 08:33 AM
+-- Generation Time: Jun 08, 2022 at 02:46 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -89,17 +89,18 @@ CREATE TABLE `presensi` (
   `periode_idperiode` int(11) NOT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `jam_absen_masuk` datetime DEFAULT NULL,
-  `jam_absen_keluar` datetime DEFAULT NULL
+  `jam_absen_keluar` datetime DEFAULT NULL,
+  `notif` tinyint(4) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `presensi`
 --
 
-INSERT INTO `presensi` (`users_id`, `periode_idperiode`, `status`, `jam_absen_masuk`, `jam_absen_keluar`) VALUES
-(3, 1, 'Hadir', '2022-06-04 00:09:54', '2022-06-05 12:35:17'),
-(4, 1, 'Tidak Hadir', NULL, NULL),
-(5, 1, 'Tidak Hadir', NULL, NULL);
+INSERT INTO `presensi` (`users_id`, `periode_idperiode`, `status`, `jam_absen_masuk`, `jam_absen_keluar`, `notif`) VALUES
+(3, 1, 'Hadir', '2022-06-04 00:09:54', '2022-06-04 23:35:00', 0),
+(4, 1, 'Tidak Hadir', NULL, NULL, 0),
+(5, 1, 'Tidak Hadir', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `foto`, `deleted_at`) VALUES
 (2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', NULL, '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL),
-(3, 'Pegawai Satu', 'satu@satu.com', NULL, '$2y$10$XqDFBZ14hqDG9AH.wwJr9.qgJqytua/izAXamwytGzjFPrKaDvFPC', NULL, NULL, '2022-06-03 13:25:53', 'pegawai', NULL, '2022-06-02 14:32:23'),
+(3, 'Pegawai Satu', 'satu@satu.com', NULL, '$2y$10$XqDFBZ14hqDG9AH.wwJr9.qgJqytua/izAXamwytGzjFPrKaDvFPC', NULL, NULL, '2022-06-03 13:25:53', 'pegawai', NULL, '2022-06-08 13:27:13'),
 (4, 'Pegawai Dua', 'dua@dua.com', NULL, '$2y$10$WfmUTUJljpgSTTggVWGGiuDIp09gj3kRjRXotL.z2zdK3CYx0gXbK', NULL, '2022-06-03 13:26:17', '2022-06-03 13:26:17', 'pegawai', NULL, NULL),
 (5, 'Pegawai Tiga', 'tiga@tiga.com', NULL, '$2y$10$k.GlHG3wXw0GIACDVlZn2.ON2tr7.NJj7bhc9Gk4VRm8gjmijosLu', NULL, '2022-06-03 13:26:42', '2022-06-03 13:26:42', 'pegawai', NULL, NULL);
 

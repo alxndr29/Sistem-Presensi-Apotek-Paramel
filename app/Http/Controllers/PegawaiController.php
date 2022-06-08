@@ -13,20 +13,23 @@ class PegawaiController extends Controller
     {
         $tombol_absen = true;
         $periode_presensi = DB::table('periode')->where('aktif', 1)->first();
+        $newtimestamp = null;
+        $batas_absen = null;
+        $status_presensi = null;
+        if ($periode_presensi != null) {
+            $newtimestamp = strtotime($periode_presensi->jam_mulai . '+ 15 minute');
+            $batas_absen =  date('Y-m-d H:i:s', $newtimestamp);
 
-        $newtimestamp = strtotime($periode_presensi->jam_mulai . '+ 15 minute');
-        $batas_absen =  date('Y-m-d H:i:s', $newtimestamp);
+            $status_presensi =  DB::table('presensi')
+                ->where('periode_idperiode', $periode_presensi->idperiode)
+                ->where('users_id', Auth::user()->id)
+                ->first();
 
-        $status_presensi =  DB::table('presensi')
-            ->where('periode_idperiode', $periode_presensi->idperiode)
-            ->where('users_id', Auth::user()->id)
-            ->first();
-        
-        if (date('Y-m-d H:i:s') > $batas_absen) {
-            $tombol_absen = false;
+            if (date('Y-m-d H:i:s') > $batas_absen) {
+                $tombol_absen = false;
+            }
         }
-      
-        return view('pegawai.index', compact('periode_presensi', 'batas_absen', 'tombol_absen','status_presensi'));
+        return view('pegawai.index', compact('periode_presensi', 'batas_absen', 'tombol_absen', 'status_presensi'));
     }
     public function presensiMasuk()
     {
@@ -51,7 +54,8 @@ class PegawaiController extends Controller
             return redirect('/pegawai/home')->with('gagal', $e->getMessage());
         }
     }
-    public function presensiKeluar(){
+    public function presensiKeluar()
+    {
         $periode_presensi = DB::table('periode')->where('aktif', 1)->first();
         $dateTimeSekarang =  date('Y-m-d H:i:s');
         $newtimestamp = strtotime($periode_presensi->jam_akhir);
@@ -63,7 +67,7 @@ class PegawaiController extends Controller
                 DB::table('presensi')
                     ->where('periode_idperiode', $periode_presensi->idperiode)
                     ->where('users_id', Auth::user()->id)
-                    ->where('status','Hadir')
+                    ->where('status', 'Hadir')
                     ->update([
                         'jam_absen_keluar' => $dateTimeSekarang
                     ]);

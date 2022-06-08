@@ -300,7 +300,6 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-
         $('#datetimepicker1').datetimepicker({
             // minDate: new Date(),
             format: 'YYYY-MM-DD HH:mm'
@@ -309,7 +308,6 @@
             // minDate: new Date(),
             format: 'YYYY-MM-DD HH:mm'
         });
-        
         $('#datatable-pegawai').DataTable({
             "lengthChange": false,
             "bPaginate": false,
@@ -332,6 +330,28 @@
                 }
             ]
         }).buttons().container().appendTo("#export-container");
+        $('#datatable-pegawai-2').DataTable({
+            "lengthChange": false,
+            "bPaginate": false,
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to Excel',
+                    exportOptions: {
+
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to PDF',
+                    exportOptions: {
+
+                    }
+                }
+            ]
+        }).buttons().container().appendTo("#export-container-2");
         setInterval(() => {
             jamserver();
         }, 30000);
@@ -345,7 +365,26 @@
                 $("#waktuserver").html('<b>' + 'Waktu Server: ' + data + '</b>');
 
             },
-            error: function() {
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    }
+
+    function detailPresensiUbah(iduser, idperiode) {
+        console.log(iduser + "/" + idperiode);
+        $.ajax({
+            url: "{{url('presensi/edit')}}" + "/" + iduser + "/" + idperiode,
+            type: 'GET',
+            success: function(data) {
+                console.log(data);
+                $('#comboboxkehadiranedit option[value="' + data.status + '"]').prop('selected', true);
+                $("#jammulaiedit").val(data.jam_absen_masuk);
+                $("#jamselesaiedit").val(data.jam_absen_keluar);
+                $('#form-edit-presensi').attr('action', "{{url('presensi/update')}}" + "/" + iduser + "/" + idperiode);
+                $("#edit-presensi").modal('show');
+            },
+            error: function(data) {
                 console.log(data);
             }
         });

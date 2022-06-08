@@ -16,10 +16,11 @@ class AdminController extends Controller
     }
     public function periodePresensi()
     {
-        $periode_presensi = DB::table('periode')->orderBy('aktif','desc')->get();
-        return view('admin.periode',compact('periode_presensi'));
+        $periode_presensi = DB::table('periode')->orderBy('aktif', 'desc')->get();
+        return view('admin.periode', compact('periode_presensi'));
     }
-    public function detailPeriodePresensi($id){
+    public function detailPeriodePresensi($id)
+    {
         return view('admin.periodedetail');
     }
     public function storePeriodePresensi(Request $request)
@@ -46,8 +47,34 @@ class AdminController extends Controller
         }
         return $request->all();
     }
-    public function updateDataPresensi(Request $request, $iduser, $idperiode){
-        return $iduser. "/".$idperiode;
+    public function updateDataPresensi(Request $request, $iduser, $idperiode)
+    {
+        try {
+            DB::table('presensi')
+                ->where('users_id', $iduser)
+                ->where('periode_idperiode', $idperiode)
+                ->update([
+                    'jam_absen_masuk' => $request->get('jam_mulai'),
+                    'jam_absen_keluar' => $request->get('jam_akhir'),
+                    'status' => $request->get('status_kehadiran')
+                ]);
+            return redirect('/laporan')->with('sukses', 'Berhasil Ubah Data Presensi');
+        } catch (\Exception $e) {
+            return redirect('/laporan')->with('gagal', 'Berhasil Ubah Data Presensi');
+        }
+    }
+    public function editDataPresensi($iduser, $idperiode)
+    {
+        $data = DB::table('users')
+            ->join('presensi', 'users.id', '=', 'presensi.users_id')
+            ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
+            ->where('periode.aktif', 1)
+            ->where('users.role', 'pegawai')
+            ->where("users.id", $iduser)
+            ->where("periode.idperiode", $idperiode)
+            ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
+            ->first();
+        return response()->json($data);
     }
     public function pegawai()
     {
@@ -118,8 +145,17 @@ class AdminController extends Controller
             ->where('users.role', 'pegawai')
             ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
             ->get();
-        // return $data;
-        $periode = DB::table('periode')->where('aktif',1)->first();
-        return view('admin.laporan', compact('data','periode'));
+        $ketidakhadiran = DB::table('presensi')
+            ->join('users', 'users.id', '=', 'presensi.users_id')
+            ->select('users.id as userid','users.name as username', DB::raw('count(*) as totaltidakhadir'))
+            ->where('presensi.status', 'Tidak Hadir')
+            ->where('presensi.notif', 0)
+            ->groupBy('presensi.users_id')
+            ->get();
+        $periode = DB::table('periode')->where('aktif', 1)->first();
+        return view('admin.laporan', compact('data', 'periode', 'ketidakhadiran'));
+    }
+    public function laporanDetailKariawan(){
+
     }
 }
