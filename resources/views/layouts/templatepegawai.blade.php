@@ -128,7 +128,7 @@
                             <h3>Main Menu</h3>
                             <ul class="nav side-menu">
                                 <li>
-                                    <a href="{{route('admin.laporan')}}">
+                                    <a href="{{route('pegawai.laporan')}}">
                                         <i class="fa fa-laptop"></i> Laporan Presensi
                                     </a>
                                 </li>
@@ -291,10 +291,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         @if(Session::has('sukses'))
-            alert("{{ Session::get('sukses') }}");
+        alert("{{ Session::get('sukses') }}");
         @endif
         @if(Session::has('gagal'))
-            alert("{{ Session::get('gagal') }}");
+        alert("{{ Session::get('gagal') }}");
         @endif
 
         $('#datetimepicker1').datetimepicker({
@@ -336,4 +336,13 @@
             }
         });
     }
+    $("#btnsearchlaporanpegawai").on("click", function() {
+        var start = $("#date-start").val();
+        var end = $("#date-end").val();
+        if(start == null || end == null){
+            alert('harap mengisi data tanggal dengan benar');
+        }else{
+            location.href = "{{url('pegawai/laporan')}}/" + start + "/" + end;
+        }
+    });
 </script>

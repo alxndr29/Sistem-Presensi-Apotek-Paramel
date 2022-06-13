@@ -39,3 +39,4 @@ Route::get("/presensi/edit/{iduser}/{idperiode}",'AdminController@editDataPresen
 Route::get('/pegawai/home', 'PegawaiController@index')->name('pegawai.index');
 Route::get('/pegawai/presensimasuk', 'PegawaiController@presensiMasuk')->name('pegawai.presensimasuk');
 Route::get('/pegawai/presensikeluar', 'PegawaiController@presensiKeluar')->name('pegawai.presensikeluar');
+Route::get('/pegawai/laporan/{start?}/{end?}','PegawaiController@laporan')->name('pegawai.laporan');

@@ -77,4 +77,52 @@ class PegawaiController extends Controller
             return redirect('/pegawai/home')->with('gagal', $e->getMessage());
         }
     }
+    public function laporan($start = null, $end = null)
+    {
+        $totalbolos = 0;
+        $totallibur = 0;
+        $totalsakit = 0;
+        $totalhadir = 0;
+        $totaljamnormal = 0;
+        $totaljamaktual = 0;
+        $data = DB::table('users')
+            ->join('presensi', 'users.id', '=', 'presensi.users_id')
+            ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
+            ->where('users.id', Auth::user()->id)
+            ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
+            ->get();
+        if ($start == null && $end == null) {
+            $data = DB::table('users')
+                ->join('presensi', 'users.id', '=', 'presensi.users_id')
+                ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
+                ->where('users.id', Auth::user()->id)
+                ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
+                ->get();
+         } else {
+            
+            $data = DB::table('users')
+                ->join('presensi', 'users.id', '=', 'presensi.users_id')
+                ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
+                ->where('users.id', Auth::user()->id)
+                ->where('periode.jam_mulai','>=', $start)
+                ->where('periode.jam_akhir', '<=', $end)
+                ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
+                ->get();
+         }
+        // return $data;
+        foreach($data as $key => $value){
+            $totaljamnormal += $value->totaljamnormal;
+            $totaljamaktual += $value->totalaktual;
+            if($value->status == "Tidak Hadir"){
+                $totalbolos++;
+            }else if($value->status == "Hadir"){
+                $totalhadir++;
+            }else if($value->status == "Sakit"){
+                $totalsakit++;
+            }else if($value->status == "Libur"){
+                $totallibur++;
+            }
+        }
+        return view('pegawai.laporan',compact('data','start','end','totalbolos','totallibur','totalsakit','totalhadir','totaljamnormal', 'totaljamaktual'));
+    }
 }
