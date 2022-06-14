@@ -55,6 +55,7 @@
                                                 <th>Role</th>
                                                 <th>Edit</th>
                                                 <th>Hapus</th>
+                                                <th>Detail</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -75,6 +76,9 @@
                                                         @method('delete')
                                                         <button type="submit" class="btn btn-danger">Hapus</button>
                                                     </form>
+                                                </td>
+                                                <td>
+                                                    <a href="{{route('admin.detailpegawai',['id' => $value->id])}}" class="btn btn-warning">Detail</a>
                                                 </td>
                                             </tr>
                                             @endforeach

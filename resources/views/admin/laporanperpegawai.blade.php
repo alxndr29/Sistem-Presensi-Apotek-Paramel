@@ -1,4 +1,4 @@
-@extends('layouts.templatepegawai')
+@extends('layouts.templateadmin')
 
 @section('content')
 <div class="card">
@@ -49,7 +49,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    <table id="datatable-pegawai" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                    <table id="datatable-pegawai-laporan" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -165,7 +165,7 @@
             </div>
         </div>
     </div>
-    <div class="card-footer" id="export-container">
+    <div class="card-footer" id="export-container-laporan">
 
     </div>
 </div>

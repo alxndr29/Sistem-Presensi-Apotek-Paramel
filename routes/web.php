@@ -35,6 +35,7 @@ Route::post('/periode/store', 'AdminController@storePeriodePresensi')->name('adm
 Route::get('/laporan', 'AdminController@laporan')->name('admin.laporan');
 Route::put('/presensi/update/{iduser}/{idperiode}', 'AdminController@updateDataPresensi')->name('admin.ubahdatapresensi');
 Route::get("/presensi/edit/{iduser}/{idperiode}",'AdminController@editDataPresensi')->name('admin.editdatapresensi');
+Route::get("/laporan/pegawai/{id}/{start?}/{end?}",'AdminController@laporanDetailKariawan')->name('admin.detailpegawai');
 //Pegawai
 Route::get('/pegawai/home', 'PegawaiController@index')->name('pegawai.index');
 Route::get('/pegawai/presensimasuk', 'PegawaiController@presensiMasuk')->name('pegawai.presensimasuk');

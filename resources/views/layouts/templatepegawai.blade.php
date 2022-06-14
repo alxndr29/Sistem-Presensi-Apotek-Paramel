@@ -31,11 +31,12 @@
     <link href="{{asset('gentelella-master/build/css/custom.min.css')}}" rel="stylesheet">
 
     <!-- Datatables -->
-    <link href="{{asset('gentelella-master/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+    <!-- <link href="{{asset('gentelella-master/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('gentelella-master/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('gentelella-master/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('gentelella-master/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.cs')}}s" rel="stylesheet">
-    <link href="{{asset('gentelella-master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('gentelella-master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/date-1.1.2/fc-4.1.0/fh-3.2.3/kt-2.7.0/r-2.3.0/rg-1.2.0/rr-1.2.8/sc-2.0.6/sb-1.3.3/sp-2.0.1/sl-1.4.0/sr-1.1.1/datatables.min.css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
 
@@ -264,7 +265,7 @@
     <script src="{{asset('gentelella-master/vendors/moment/min/moment.min.js')}}"></script>
     <script src="{{asset('gentelella-master/vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
     <!-- Datatables -->
-    <script src="{{asset('gentelella-master/vendors/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <!-- <script src="{{asset('gentelella-master/vendors/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('gentelella-master/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
     <script src="{{asset('gentelella-master/vendors/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
     <script src="{{asset('gentelella-master/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')}}"></script>
@@ -278,7 +279,11 @@
     <script src="{{asset('gentelella-master/vendors/datatables.net-scroller/js/dataTables.scroller.min.js')}}"></script>
     <script src="{{asset('gentelella-master/vendors/jszip/dist/jszip.min.js')}}"></script>
     <script src="{{asset('gentelella-master/vendors/pdfmake/build/pdfmake.min.js')}}"></script>
-    <script src="{{asset('gentelella-master/vendors/pdfmake/build/vfs_fonts.js')}}"></script>
+    <script src="{{asset('gentelella-master/vendors/pdfmake/build/vfs_fonts.js')}}"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/date-1.1.2/fc-4.1.0/fh-3.2.3/kt-2.7.0/r-2.3.0/rg-1.2.0/rr-1.2.8/sc-2.0.6/sb-1.3.3/sp-2.0.1/sl-1.4.0/sr-1.1.1/datatables.min.js"></script>
+
     <!-- Custom Theme Scripts -->
     <script src="{{asset('gentelella-master/build/js/custom.min.js')}}"></script>
 
@@ -305,18 +310,48 @@
             // minDate: new Date(),
             format: 'YYYY-MM-DD HH:mm'
         });
+        var stitle = "";
+        console.log("{{$start}}");
+        if ("{{$start}}" == null || "{{$end}}" == null) {
+            stitle = "Laporan Presensi Semua Periode ";
+        } else {
+            stitle = "Laporan Presensi Periode " + "{{$start}}" + " sd " + "{{$end}}";
+        }
         $('#datatable-pegawai').DataTable({
             "lengthChange": false,
             "bPaginate": false,
             dom: 'lBfrtip',
             buttons: [{
-                extend: 'excel',
-                className: 'btn btn-primary',
-                text: 'Export to Excel',
-                exportOptions: {
-                    columns: [0, 1, 2, 3]
+                    extend: 'excel',
+                    title: stitle,
+                    messageTop: function() {
+                        return '\n \n Total Hari Hadir: ' + "{{$totalhadir}} Hari" +
+                            '\n \n Total Hari Bolos: ' + "{{$totalbolos}} Hari" +
+                            '\n \n Total Hari Sakit: ' + "{{$totalsakit}} Hari" +
+                            '\n \n Total Hari Libur: ' + "{{$totallibur}} Hari";
+                    },
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to Excel',
+                    exportOptions: {
+
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    title: stitle,
+                    messageTop: function() {
+                        return '\n \n Total Hari Hadir ' + "{{$totalhadir}} Hari" +
+                            '\n \n Total Hari Bolos ' + "{{$totalbolos}} Hari" +
+                            '\n \n Total Hari Sakit ' + "{{$totalsakit}} Hari" +
+                            '\n \n Total Hari Libur ' + "{{$totallibur}} Hari";
+                    },
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to PDF',
+                    exportOptions: {
+
+                    }
                 }
-            }]
+            ]
         }).buttons().container().appendTo("#export-container");
         jamserver();
         setInterval(() => {
@@ -339,9 +374,9 @@
     $("#btnsearchlaporanpegawai").on("click", function() {
         var start = $("#date-start").val();
         var end = $("#date-end").val();
-        if(start == null || end == null){
+        if (start == null || end == null) {
             alert('harap mengisi data tanggal dengan benar');
-        }else{
+        } else {
             location.href = "{{url('pegawai/laporan')}}/" + start + "/" + end;
         }
     });
