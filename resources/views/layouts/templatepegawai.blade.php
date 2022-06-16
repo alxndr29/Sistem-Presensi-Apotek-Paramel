@@ -48,7 +48,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>SI Presensi</span></a>
+                        <a href="{{url('pegawai/home')}}" class="site_title"><i class="fa fa-paw"></i> <span>SI Presensi</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -310,49 +310,7 @@
             // minDate: new Date(),
             format: 'YYYY-MM-DD HH:mm'
         });
-        var stitle = "";
-        console.log("{{$start}}");
-        if ("{{$start}}" == null || "{{$end}}" == null) {
-            stitle = "Laporan Presensi Semua Periode ";
-        } else {
-            stitle = "Laporan Presensi Periode " + "{{$start}}" + " sd " + "{{$end}}";
-        }
-        $('#datatable-pegawai').DataTable({
-            "lengthChange": false,
-            "bPaginate": false,
-            dom: 'lBfrtip',
-            buttons: [{
-                    extend: 'excel',
-                    title: stitle,
-                    messageTop: function() {
-                        return '\n \n Total Hari Hadir: ' + "{{$totalhadir}} Hari" +
-                            '\n \n Total Hari Bolos: ' + "{{$totalbolos}} Hari" +
-                            '\n \n Total Hari Sakit: ' + "{{$totalsakit}} Hari" +
-                            '\n \n Total Hari Libur: ' + "{{$totallibur}} Hari";
-                    },
-                    className: 'btn btn-primary m-1',
-                    text: 'Export to Excel',
-                    exportOptions: {
-
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    title: stitle,
-                    messageTop: function() {
-                        return '\n \n Total Hari Hadir ' + "{{$totalhadir}} Hari" +
-                            '\n \n Total Hari Bolos ' + "{{$totalbolos}} Hari" +
-                            '\n \n Total Hari Sakit ' + "{{$totalsakit}} Hari" +
-                            '\n \n Total Hari Libur ' + "{{$totallibur}} Hari";
-                    },
-                    className: 'btn btn-primary m-1',
-                    text: 'Export to PDF',
-                    exportOptions: {
-
-                    }
-                }
-            ]
-        }).buttons().container().appendTo("#export-container");
+       
         jamserver();
         setInterval(() => {
             jamserver();
@@ -371,13 +329,6 @@
             }
         });
     }
-    $("#btnsearchlaporanpegawai").on("click", function() {
-        var start = $("#date-start").val();
-        var end = $("#date-end").val();
-        if (start == null || end == null) {
-            alert('harap mengisi data tanggal dengan benar');
-        } else {
-            location.href = "{{url('pegawai/laporan')}}/" + start + "/" + end;
-        }
-    });
+    
 </script>
+@yield('anotherjs')

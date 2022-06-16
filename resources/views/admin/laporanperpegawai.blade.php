@@ -100,61 +100,7 @@
                                                 @endif
                                             </tr>
                                             @endforeach
-                                            <!-- <tr>
-                                                <td style="display: none">a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td><b>Total: </b> </td>
-                                                <td>{{$totaljamnormal}} Jam</td>
-                                                <td>{{$totaljamaktual}} Jam</td>
-                                            </tr>
-                                            <tr>
-                                                <td>a</td>
-                                                <td><b>Total Hari Hadir</b> {{$totalhadir}} Hari</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                            </tr>
-                                            <tr>
-                                                <td>a</td>
-                                                <td><b>Total Hari Bolos</b> {{$totalbolos}} Hari</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                            </tr>
-                                            <tr>
-                                                <td>a</td>
-                                                <td><b>Total Hari Sakit</b> {{$totalsakit}} Hari</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                            </tr>
-                                            <tr>
-                                                <td>a</td>
-                                                <td><b>Total Hari Libur</b> {{$totallibur}} Hari</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                            </tr> -->
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -169,5 +115,62 @@
 
     </div>
 </div>
+@section('anotherjs')
+<script type="text/javascript">
+    $(document).ready(function() {
+        var stitle = "";
+        if ("{{$start}}" == null || "{{$end}}" == null) {
+            stitle = "Laporan Presensi Semua Periode ";
+        } else {
+            stitle = "Laporan Presensi Periode " + "{{$start}}" + " sd " + "{{$end}}";
+        }
+        $('#datatable-pegawai-laporan').DataTable({
+            "lengthChange": false,
+            "bPaginate": false,
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: stitle,
+                    messageTop: function() {
+                        return '\n \n Total Hari Hadir: ' + "{{$totalhadir}} Hari" +
+                            '\n \n Total Hari Bolos: ' + "{{$totalbolos}} Hari" +
+                            '\n \n Total Hari Sakit: ' + "{{$totalsakit}} Hari" +
+                            '\n \n Total Hari Libur: ' + "{{$totallibur}} Hari";
+                    },
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to Excel',
+                    exportOptions: {
+
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    title: stitle,
+                    messageTop: function() {
+                        return '\n \n Total Hari Hadir ' + "{{$totalhadir}} Hari" +
+                            '\n \n Total Hari Bolos ' + "{{$totalbolos}} Hari" +
+                            '\n \n Total Hari Sakit ' + "{{$totalsakit}} Hari" +
+                            '\n \n Total Hari Libur ' + "{{$totallibur}} Hari";
+                    },
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to PDF',
+                    exportOptions: {
+
+                    }
+                }
+            ]
+        }).buttons().container().appendTo("#export-container-laporan");
+    });
+    $("#btnsearchlaporanpegawai").on("click", function() {
+        var start = $("#date-start").val();
+        var end = $("#date-end").val();
+        if (start == null || end == null) {
+            alert('harap mengisi data tanggal dengan benar');
+        } else {
+            location.href = "{{url('laporan/pegawai')}}/" + "{{$id}}/" + start + "/" + end;
+        }
+    });
+</script>
+@endsection
 
 @endsection

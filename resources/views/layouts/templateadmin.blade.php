@@ -48,7 +48,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>SI Presensi</span></a>
+                        <a href="{{url('admin')}}" class="site_title"><i class="fa fa-paw"></i> <span>SI Presensi</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -357,9 +357,7 @@
                 }
             ]
         }).buttons().container().appendTo("#export-container-2");
-
-
-
+        jamserver();
         setInterval(() => {
             jamserver();
         }, 30000);
@@ -398,14 +396,7 @@
         });
     }
 
-    $("#btnsearchlaporanpegawai").on("click", function() {
-        var start = $("#date-start").val();
-        var end = $("#date-end").val();
-        if (start == null || end == null) {
-            alert('harap mengisi data tanggal dengan benar');
-        } else {
-            location.href = "{{url('laporan/pegawai')}}/" +"{{$id}}/"+ start + "/" + end;
-        }
-    });
+   
 </script>
+@yield('anotherjs')
 <!-- // columns: [0, 1, 2, 3] -->

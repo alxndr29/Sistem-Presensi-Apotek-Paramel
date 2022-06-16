@@ -20,38 +20,29 @@
             <div class="col-md-12 col-sm-12 ">
                 <div>
                     <div class="x_title">
-                        <div class="d-flex justify-content-between">
-                            <div class="mx-1">
+                        <div class="d-flex">
+                            <div class="mr-auto">
+                                @if($start != null && $end != null)
+                                <h2>Laporan<small>Data Untuk Periode {{$start}} sd {{$end}}</small></h2>
+                                @else
                                 <h2>Laporan<small>Data Untuk Periode Aktif Saat Ini {{$periode->jam_mulai}} sd {{$periode->jam_akhir}}</small></h2>
+                                @endif
                             </div>
-                            <div class="mx-1">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            <div class="p-2">
+                                <input type="date" id="date-start" value="{{$start}}">
+                            </div>
+                            <div class="p-2">
+                                sd
+                            </div>
+                            <div class="p-2">
+                                <input type="date" id="date-end" value="{{$end}}">
+                            </div>
+                            <div class="p-1">
+                                <button type="button" class="btn btn-primary" id="btnsearchlaporanadmin">
                                     Filter
                                 </button>
                             </div>
-                            <!-- <div class="mx-1">
-                                <div class="form-group">
-                                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="jam_mulai" />
-                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mx-1 my-auto">
-                                sd
-                            </div>
-                            <div class="mx-1">
-                                <div class="form-group">
-                                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="jam_akhir" />
-                                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
+
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -60,7 +51,7 @@
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
 
-                                    <table id="datatable-pegawai" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                    <table id="datatable-pegawai-seluruh" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -126,7 +117,7 @@
             </div>
         </div>
     </div>
-    <div class="card-footer" id="export-container">
+    <div class="card-footer" id="export-container-seluruh">
 
     </div>
 </div>
@@ -155,11 +146,7 @@
                             <div class="mx-1">
                                 <h2>Notifikasi<small>Ketidakharian pada semua periode</small></h2>
                             </div>
-                            <div class="mx-1">
-                                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                    Filter
-                                </button> -->
-                            </div>
+
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -167,7 +154,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="card-box table-responsive">
-                                    <table id="datatable-pegawai-2" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                    <table id="datatable-pegawai" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -181,11 +168,18 @@
                                             <tr>
                                                 <td>{{$key+1}}</th>
                                                 <td>{{$value->username}}</th>
+                                                    @if($value->totaltidakhadir >= 2)
+                                                <td style="background-color:red;">{{$value->totaltidakhadir}}</th>
+                                                    @else
                                                 <td>{{$value->totaltidakhadir}}</th>
+                                                    @endif
                                                 <td>
-                                                    <button type="button" class="btn btn-primary">
-                                                        Reset Notifikasi
-                                                    </button>
+                                                    <form method="post" action="{{route('admin.resetnotifikasi',['id' => $value->userid])}}" onSubmit="if(!confirm('Notifikasi akan direset menjadi 0?')){return false;}">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Reset Notifikasi
+                                                        </button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -199,7 +193,7 @@
             </div>
         </div>
     </div>
-    <div class="card-footer" id="export-container-2">
+    <div class="card-footer" id="export-container">
 
     </div>
 </div>
@@ -293,4 +287,61 @@
         </div>
     </div>
 </div>
+@endsection
+@section('anotherjs')
+<script type="text/javascript">
+    $(document).ready(function() {
+        // alert('hello world!');
+        $("#btnsearchlaporanadmin").on('click', function() {
+            var start = $("#date-start").val();
+            var end = $("#date-end").val();
+            if (start == null || end == null) {
+                alert('harap mengisi data tanggal dengan benar');
+            } else {
+                location.href = "{{url('laporan')}}/" + start + "/" + end;
+            }
+        });
+
+        var stitle = "";
+        if ("{{$start}}" == null || "{{$end}}" == null) {
+            stitle = "Laporan Presensi Semua Periode ";
+            console.log("null");
+        } else {
+            stitle = "Laporan Presensi Periode " + "{{$start}}" + " sd " + "{{$end}}";
+            console.log("onok isi");
+        }
+
+        $('#datatable-pegawai-seluruh').DataTable({
+            "lengthChange": false,
+            "bPaginate": false,
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: stitle,
+                    // messageTop: function() {
+                    //     return '\n \n Laporan Presensi Periode: ' + "{{$start}} sd {{$end}}";
+                    // },
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to Excel',
+                    exportOptions: {
+
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    title: stitle,
+                    // messageTop: function() {
+                    //     return '\n \n Laporan Presensi Periode: ' + "{{$start}} sd {{$end}}";
+                    // },
+                    className: 'btn btn-primary m-1',
+                    text: 'Export to PDF',
+                    exportOptions: {
+
+                    }
+                }
+            ]
+        }).buttons().container().appendTo("#export-container-seluruh");
+
+    });
+</script>
 @endsection

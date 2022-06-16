@@ -32,10 +32,11 @@ Route::put('/pegawai/update/{id}', 'AdminController@updatePegawai')->name('admin
 Route::get('/periode', 'AdminController@periodePresensi')->name('admin.periodepresensi');
 Route::get('/periode/detail/{id}', 'AdminController@detailPeriodePresensi')->name('admin.periodedetail');
 Route::post('/periode/store', 'AdminController@storePeriodePresensi')->name('admin.storeperiode');
-Route::get('/laporan', 'AdminController@laporan')->name('admin.laporan');
+Route::get('/laporan/{start?}/{end?}', 'AdminController@laporan')->name('admin.laporan');
 Route::put('/presensi/update/{iduser}/{idperiode}', 'AdminController@updateDataPresensi')->name('admin.ubahdatapresensi');
 Route::get("/presensi/edit/{iduser}/{idperiode}",'AdminController@editDataPresensi')->name('admin.editdatapresensi');
 Route::get("/laporan/pegawai/{id}/{start?}/{end?}",'AdminController@laporanDetailKariawan')->name('admin.detailpegawai');
+Route::post("/resetnotifikasi/{id}",'AdminController@resetNotifikasiTidakHadir')->name('admin.resetnotifikasi');
 //Pegawai
 Route::get('/pegawai/home', 'PegawaiController@index')->name('pegawai.index');
 Route::get('/pegawai/presensimasuk', 'PegawaiController@presensiMasuk')->name('pegawai.presensimasuk');

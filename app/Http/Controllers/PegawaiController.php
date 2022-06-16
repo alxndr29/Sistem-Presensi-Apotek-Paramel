@@ -61,9 +61,9 @@ class PegawaiController extends Controller
         $newtimestamp = strtotime($periode_presensi->jam_akhir);
         $batas_absen =  date('Y-m-d H:i:s', $newtimestamp);
         try {
-            if ($dateTimeSekarang < $batas_absen) {
-                return redirect('/pegawai/home')->with('sukses', 'Absen Keluar Tidak Dapat Dilakukan Karena Belum Saatnya.');
-            } else {
+            // if ($dateTimeSekarang < $batas_absen) {
+            //     return redirect('/pegawai/home')->with('sukses', 'Absen Keluar Tidak Dapat Dilakukan Karena Belum Saatnya.');
+            // } else {
                 DB::table('presensi')
                     ->where('periode_idperiode', $periode_presensi->idperiode)
                     ->where('users_id', Auth::user()->id)
@@ -72,7 +72,7 @@ class PegawaiController extends Controller
                         'jam_absen_keluar' => $dateTimeSekarang
                     ]);
                 return redirect('/pegawai/home')->with('sukses', 'Berhasil Melakukan Absensi Keluar.');
-            }
+            // }
         } catch (\Exception $e) {
             return redirect('/pegawai/home')->with('gagal', $e->getMessage());
         }
@@ -96,6 +96,7 @@ class PegawaiController extends Controller
                 ->join('presensi', 'users.id', '=', 'presensi.users_id')
                 ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
                 ->where('users.id', Auth::user()->id)
+                ->orderBy('periode.jam_mulai','desc')
                 ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
                 ->get();
          } else {
@@ -106,6 +107,7 @@ class PegawaiController extends Controller
                 ->where('users.id', Auth::user()->id)
                 ->where('periode.jam_mulai','>=', $start)
                 ->where('periode.jam_akhir', '<=', $end)
+                ->orderBy('periode.jam_mulai', 'desc')
                 ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
                 ->get();
          }
