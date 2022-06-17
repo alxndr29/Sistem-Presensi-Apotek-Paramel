@@ -71,7 +71,7 @@
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <form action="{{route('admin.destroypegawai',$value->id)}}" method="post">
+                                                    <form action="{{route('admin.destroypegawai',$value->id)}}" method="post" onSubmit="if(!confirm('Data Pegawai Akan Dihapus')){return false;}">
                                                         @csrf
                                                         @method('delete')
                                                         <button type="submit" class="btn btn-danger">Hapus</button>

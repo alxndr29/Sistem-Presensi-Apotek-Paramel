@@ -320,16 +320,18 @@
                     extend: 'excel',
                     className: 'btn btn-primary m-1',
                     text: 'Export to Excel',
+                    title: 'Daftar Pegawai',
                     exportOptions: {
-
+                        columns: [0, 1, 2, 3]
                     }
                 },
                 {
                     extend: 'pdf',
                     className: 'btn btn-primary m-1',
                     text: 'Export to PDF',
+                    title: 'Daftar Pegawai',
                     exportOptions: {
-
+                        columns: [0, 1, 2, 3]
                     }
                 }
             ]
@@ -395,8 +397,6 @@
             }
         });
     }
-
-   
 </script>
 @yield('anotherjs')
 <!-- // columns: [0, 1, 2, 3] -->

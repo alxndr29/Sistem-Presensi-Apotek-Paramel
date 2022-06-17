@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    //return view('welcome');
-    //return view('admin.index');
     return redirect('/home');
 });
 Route::get('/jamserver', function () {
@@ -34,11 +32,11 @@ Route::get('/periode/detail/{id}', 'AdminController@detailPeriodePresensi')->nam
 Route::post('/periode/store', 'AdminController@storePeriodePresensi')->name('admin.storeperiode');
 Route::get('/laporan/{start?}/{end?}', 'AdminController@laporan')->name('admin.laporan');
 Route::put('/presensi/update/{iduser}/{idperiode}', 'AdminController@updateDataPresensi')->name('admin.ubahdatapresensi');
-Route::get("/presensi/edit/{iduser}/{idperiode}",'AdminController@editDataPresensi')->name('admin.editdatapresensi');
-Route::get("/laporan/pegawai/{id}/{start?}/{end?}",'AdminController@laporanDetailKariawan')->name('admin.detailpegawai');
-Route::post("/resetnotifikasi/{id}",'AdminController@resetNotifikasiTidakHadir')->name('admin.resetnotifikasi');
+Route::get('/presensi/edit/{iduser}/{idperiode}', 'AdminController@editDataPresensi')->name('admin.editdatapresensi');
+Route::get('/detail/pegawai/{id}/{start?}/{end?}', 'AdminController@laporanDetailKariawan')->name('admin.detailpegawai');
+Route::post("/resetnotifikasi/{id}", 'AdminController@resetNotifikasiTidakHadir')->name('admin.resetnotifikasi');
 //Pegawai
 Route::get('/pegawai/home', 'PegawaiController@index')->name('pegawai.index');
 Route::get('/pegawai/presensimasuk', 'PegawaiController@presensiMasuk')->name('pegawai.presensimasuk');
 Route::get('/pegawai/presensikeluar', 'PegawaiController@presensiKeluar')->name('pegawai.presensikeluar');
-Route::get('/pegawai/laporan/{start?}/{end?}','PegawaiController@laporan')->name('pegawai.laporan');
+Route::get('/pegawai/laporan/{start?}/{end?}', 'PegawaiController@laporan')->name('pegawai.laporan');

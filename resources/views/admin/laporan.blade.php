@@ -125,7 +125,7 @@
 <br>
 <div class="card">
     <div class="card-header">
-        Notifikasi Tidak Hadir (sementara)
+        Notifikasi Tidak Hadir
     </div>
     <div class="card-body">
         @if(Session::has('sukses'))
@@ -168,7 +168,7 @@
                                             <tr>
                                                 <td>{{$key+1}}</th>
                                                 <td>{{$value->username}}</th>
-                                                    @if($value->totaltidakhadir >= 2)
+                                                    @if($value->totaltidakhadir >= 3)
                                                 <td style="background-color:red;">{{$value->totaltidakhadir}}</th>
                                                     @else
                                                 <td>{{$value->totaltidakhadir}}</th>
@@ -324,7 +324,7 @@
                     className: 'btn btn-primary m-1',
                     text: 'Export to Excel',
                     exportOptions: {
-
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7,8]
                     }
                 },
                 {
@@ -336,7 +336,7 @@
                     className: 'btn btn-primary m-1',
                     text: 'Export to PDF',
                     exportOptions: {
-
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7,8]
                     }
                 }
             ]

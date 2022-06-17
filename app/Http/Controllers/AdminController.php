@@ -21,7 +21,17 @@ class AdminController extends Controller
     }
     public function detailPeriodePresensi($id)
     {
-        return view('admin.periodedetail');
+        $periode = DB::table('periode')->where('idperiode', $id)->first();
+        $data = DB::table('users')
+            ->join('presensi', 'users.id', '=', 'presensi.users_id')
+            ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
+            ->where('periode.idperiode', $id)
+            ->where('users.role', 'pegawai')
+            ->where('users.deleted_at', null)
+            ->orderBy('periode.jam_mulai', 'desc')
+            ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
+            ->get();
+        return view('admin.periodedetail',compact('periode','data'));
     }
     public function storePeriodePresensi(Request $request)
     {
@@ -81,7 +91,7 @@ class AdminController extends Controller
     }
     public function pegawai()
     {
-        $data_pegawai = DB::table('users')->get();
+        $data_pegawai = DB::table('users')->where('deleted_at', null)->get();
         // return $data_pegawai;
         return view('admin.pegawai', compact('data_pegawai'));
     }
@@ -143,7 +153,7 @@ class AdminController extends Controller
     public function resetNotifikasiTidakHadir($id)
     {
         try {
-            DB::table('presensi')->where('users_id', $id)->update([
+            DB::table('presensi')->join('users', 'users.id', '=', 'presensi.users_id')->where('users.deleted_at', null)->where('users_id', $id)->update([
                 'notif' => 1
             ]);
             return redirect('/laporan')->with('sukses', 'Berhasil Reset Notifikasi');
@@ -153,7 +163,7 @@ class AdminController extends Controller
     }
     public function laporan($start = null, $end = null)
     {
-       
+
         if ($start == null && $end == null) {
             // return 'masuk sini';
             $data = DB::table('users')
@@ -161,6 +171,7 @@ class AdminController extends Controller
                 ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
                 ->where('periode.aktif', 1)
                 ->where('users.role', 'pegawai')
+                ->where('users.deleted_at', null)
                 ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
                 ->get();
         } else {
@@ -171,7 +182,8 @@ class AdminController extends Controller
                 ->where('periode.jam_mulai', '>=', $start)
                 ->where('periode.jam_akhir', '<=', $end)
                 ->where('users.role', 'pegawai')
-                ->orderBy('periode.jam_mulai','desc')
+                ->where('users.deleted_at', null)
+                ->orderBy('periode.jam_mulai', 'desc')
                 ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
                 ->get();
         }
@@ -181,14 +193,15 @@ class AdminController extends Controller
             ->select('users.id as userid', 'users.name as username', DB::raw('count(*) as totaltidakhadir'))
             ->where('presensi.status', 'Tidak Hadir')
             ->where('presensi.notif', 0)
+            ->where('users.deleted_at', null)
             ->groupBy('presensi.users_id')
             ->get();
         $periode = DB::table('periode')->where('aktif', 1)->first();
-        return view('admin.laporan', compact('data', 'periode', 'ketidakhadiran','start','end'));
+        return view('admin.laporan', compact('data', 'periode', 'ketidakhadiran', 'start', 'end'));
     }
     public function laporanDetailKariawan($id, $start = null, $end = null)
     {
-        // return $id;
+        // return 'a';
         $totalbolos = 0;
         $totallibur = 0;
         $totalsakit = 0;
@@ -199,11 +212,8 @@ class AdminController extends Controller
             ->join('presensi', 'users.id', '=', 'presensi.users_id')
             ->join('periode', 'periode.idperiode', '=', 'presensi.periode_idperiode')
             ->where('users.id', $id)
-            //->where('users.role','Pegawai')
             ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
             ->get();
-
-        // return $data;
         if ($start == null && $end == null) {
             $data = DB::table('users')
                 ->join('presensi', 'users.id', '=', 'presensi.users_id')
@@ -221,7 +231,7 @@ class AdminController extends Controller
                 ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
                 ->get();
         }
-        // return $data;
+
         foreach ($data as $key => $value) {
             $totaljamnormal += $value->totaljamnormal;
             $totaljamaktual += $value->totalaktual;
@@ -235,7 +245,7 @@ class AdminController extends Controller
                 $totallibur++;
             }
         }
-        //return $data;
+
         return view('admin.laporanperpegawai', compact('data', 'start', 'end', 'totalbolos', 'totallibur', 'totalsakit', 'totalhadir', 'totaljamnormal', 'totaljamaktual', 'id'));
     }
 }
