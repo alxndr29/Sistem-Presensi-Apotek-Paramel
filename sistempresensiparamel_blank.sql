@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 13, 2022 at 10:53 AM
+-- Generation Time: Jun 28, 2022 at 03:13 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sistempresensiparamel`
+-- Database: `sistempresensiparamel_blank`
 --
 
 -- --------------------------------------------------------
@@ -103,7 +103,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `foto`, `deleted_at`) VALUES
-(2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', NULL, '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL);
+(2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', NULL, '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL),
+(12, 'Pegawai Satu', 'satu@satu.com', NULL, '$2y$10$7P1dm7Hjxs/A7WU.ZKzRlu9QTJrpafUzKqsw1Hym7S/7o0i8HgLWC', NULL, '2022-06-28 02:07:04', '2022-06-28 02:07:04', 'pegawai', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -162,13 +163,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables

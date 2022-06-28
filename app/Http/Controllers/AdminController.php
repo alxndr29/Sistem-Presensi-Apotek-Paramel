@@ -197,6 +197,7 @@ class AdminController extends Controller
             ->groupBy('presensi.users_id')
             ->get();
         $periode = DB::table('periode')->where('aktif', 1)->first();
+        //dd($periode);
         return view('admin.laporan', compact('data', 'periode', 'ketidakhadiran', 'start', 'end'));
     }
     public function laporanDetailKariawan($id, $start = null, $end = null)

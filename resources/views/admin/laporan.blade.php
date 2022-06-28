@@ -25,7 +25,11 @@
                                 @if($start != null && $end != null)
                                 <h2>Laporan<small>Data Untuk Periode {{$start}} sd {{$end}}</small></h2>
                                 @else
-                                <h2>Laporan<small>Data Untuk Periode Aktif Saat Ini {{$periode->jam_mulai}} sd {{$periode->jam_akhir}}</small></h2>
+                                    @if ($periode == null)
+                                     <h2>Laporan<small></small></h2>
+                                    @else
+                                    <h2>Laporan<small>Data Untuk Periode Aktif Saat Ini {{$periode->jam_mulai}} sd {{$periode->jam_akhir}}</small></h2>
+                                    @endif
                                 @endif
                             </div>
                             <div class="p-2">
@@ -324,7 +328,7 @@
                     className: 'btn btn-primary m-1',
                     text: 'Export to Excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7,8]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                     }
                 },
                 {
@@ -336,7 +340,7 @@
                     className: 'btn btn-primary m-1',
                     text: 'Export to PDF',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7,8]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                     }
                 }
             ]

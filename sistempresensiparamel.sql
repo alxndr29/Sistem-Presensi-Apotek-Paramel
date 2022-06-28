@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 17, 2022 at 03:51 PM
+-- Generation Time: Jun 28, 2022 at 03:13 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -131,7 +131,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `foto`, `deleted_at`) VALUES
-(2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', '5IjCwOPAUO44Jy7UFuJaU7MiGvfBkSal6iSQvaYoCnrwFyikYlCcgYXx9x5G', '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL),
+(2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', 'lEJXvGtwUSfZM1YfBT4UpsvWAwlPfGrzmI6J3vz4SphIX4bbi95FPwM7VoO4', '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL),
 (9, 'Pegawai Satu', 'satu@satu.com', NULL, '$2y$10$3SPHdtErMTtJJ0z/OGFep.FoM6gnrBVt0Dq8NwHYT73Ih29lZaM3m', NULL, '2022-06-08 14:02:02', '2022-06-08 14:02:02', 'pegawai', NULL, NULL),
 (10, 'Pegawai Dua', 'dua@dua.com', NULL, '$2y$10$VlpxPSy2AdFgU4ETACFE1e0KTheTVMJlESDtFNCVYNC6DckcjPwUS', NULL, '2022-06-08 14:02:17', '2022-06-08 14:02:25', 'pegawai', NULL, NULL),
 (11, 'Pegawai Tiga', 'tiga@tiga.com', NULL, '$2y$10$r9zy3cb6odwjrJ0IuwMj7e/xfwI2z.p2rFoOj7.N1GBcJNyNstATa', NULL, '2022-06-08 14:02:50', '2022-06-08 14:02:50', 'pegawai', NULL, NULL);
@@ -193,7 +193,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
