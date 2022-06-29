@@ -21,10 +21,10 @@
             <div class="col-md-12 col-sm-12 ">
                 <div>
                     <div class="x_title">
-                        <h2>Responsive example<small>Users</small></h2>
+                        <h2>Daftar Periode<small></small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
-                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#tambah-pegawai">
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#tambah-periode">
                                     Tambah Periode
                                 </button>
                             </li>
@@ -51,9 +51,9 @@
                                             <tr>
                                                 <td>{{$key+1}}</td>
                                                 @if ($value->aktif == 1)
-                                                    <td>Aktif</td>
+                                                <td>Aktif</td>
                                                 @else
-                                                    <td>Tidak Aktif</td>
+                                                <td>Tidak Aktif</td>
                                                 @endif
                                                 <td>{{$value->jam_mulai}}</td>
                                                 <td>{{$value->jam_akhir}}</td>
@@ -76,12 +76,12 @@
 
     </div>
 </div>
-<!-- Modal Tambah Pegawai -->
-<div class="modal fade" id="tambah-pegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Tambah Periode -->
+<div class="modal fade" id="tambah-periode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Pegawai</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Periode</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -93,7 +93,7 @@
                     <div class="form-group">
                         <label>Tanggal & Jam Awal Periode</label>
                         <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="jam_mulai" />
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="jam_mulai" value="{{date('Y-m-d')}} 08:00:00" />
                             <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -102,7 +102,7 @@
                     <div class="form-group">
                         <label>Tanggal & Jam Akhir Periode</label>
                         <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="jam_akhir" />
+                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" name="jam_akhir" value="{{date('Y-m-d')}} 17:00:00" />
                             <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>

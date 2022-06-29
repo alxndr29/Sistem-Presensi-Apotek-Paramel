@@ -35,6 +35,8 @@ Route::put('/presensi/update/{iduser}/{idperiode}', 'AdminController@updateDataP
 Route::get('/presensi/edit/{iduser}/{idperiode}', 'AdminController@editDataPresensi')->name('admin.editdatapresensi');
 Route::get('/detail/pegawai/{id}/{start?}/{end?}', 'AdminController@laporanDetailKariawan')->name('admin.detailpegawai');
 Route::post("/resetnotifikasi/{id}", 'AdminController@resetNotifikasiTidakHadir')->name('admin.resetnotifikasi');
+Route::get("/lokasi", 'AdminController@indexLokasi')->name('admin.lokasi');
+Route::put("/lokasi/update", 'AdminController@updateLokasi')->name('admin.lokasiupdate');
 //Pegawai
 Route::get('/pegawai/home', 'PegawaiController@index')->name('pegawai.index');
 Route::get('/pegawai/presensimasuk', 'PegawaiController@presensiMasuk')->name('pegawai.presensimasuk');

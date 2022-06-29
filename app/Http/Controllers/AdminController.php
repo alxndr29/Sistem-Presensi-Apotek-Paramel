@@ -31,7 +31,7 @@ class AdminController extends Controller
             ->orderBy('periode.jam_mulai', 'desc')
             ->select('users.id as iduser', 'users.name as username', 'periode.*', 'presensi.*', DB::raw('TIMESTAMPDIFF(hour,jam_mulai,jam_akhir) as totaljamnormal'), DB::raw('TIMESTAMPDIFF(hour,jam_absen_masuk,jam_absen_keluar) as totalaktual'))
             ->get();
-        return view('admin.periodedetail',compact('periode','data'));
+        return view('admin.periodedetail', compact('periode', 'data'));
     }
     public function storePeriodePresensi(Request $request)
     {
@@ -153,9 +153,12 @@ class AdminController extends Controller
     public function resetNotifikasiTidakHadir($id)
     {
         try {
-            DB::table('presensi')->join('users', 'users.id', '=', 'presensi.users_id')->where('users.deleted_at', null)->where('users_id', $id)->update([
-                'notif' => 1
-            ]);
+            DB::table('presensi')->join('users', 'users.id', '=', 'presensi.users_id')
+                ->where('users.deleted_at', null)
+                //->where('users_id', $id)
+                ->update([
+                    'notif' => 1
+                ]);
             return redirect('/laporan')->with('sukses', 'Berhasil Reset Notifikasi');
         } catch (\Exception $e) {
             return redirect('/laporan')->with('gagal', $e->getMessage());
@@ -248,5 +251,23 @@ class AdminController extends Controller
         }
 
         return view('admin.laporanperpegawai', compact('data', 'start', 'end', 'totalbolos', 'totallibur', 'totalsakit', 'totalhadir', 'totaljamnormal', 'totaljamaktual', 'id'));
+    }
+    public function indexLokasi()
+    {
+        $data = DB::table('lokasi')->first();
+        return view('admin.lokasi', compact('data'));
+    }
+    public function updateLokasi(Request $request)
+    {
+        try {
+            DB::table('lokasi')->update([
+                'latitude' => $request->get('latitude'),
+                'longitude' => $request->get('longitude'),
+                'minimal_jarak' => $request->get('minimal_jarak')
+            ]);
+            return redirect('/lokasi')->with('sukses', "Berhasil Update Lokasi");
+        } catch (\Exception $e) {
+            return redirect('/lokasi')->with('gagal', $e->getMessage());
+        }
     }
 }

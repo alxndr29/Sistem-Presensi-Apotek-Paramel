@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 28, 2022 at 03:13 AM
+-- Generation Time: Jun 29, 2022 at 04:37 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -35,6 +35,25 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lokasi`
+--
+
+CREATE TABLE `lokasi` (
+  `latitude` varchar(45) DEFAULT NULL,
+  `longitude` varchar(45) DEFAULT NULL,
+  `minimal_jarak` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `lokasi`
+--
+
+INSERT INTO `lokasi` (`latitude`, `longitude`, `minimal_jarak`) VALUES
+('-10.170268929003289', '123.60756397247316', 10);
 
 -- --------------------------------------------------------
 
@@ -77,7 +96,9 @@ CREATE TABLE `periode` (
 
 INSERT INTO `periode` (`idperiode`, `aktif`, `jam_mulai`, `jam_akhir`, `created_at`, `updated_at`) VALUES
 (3, 0, '2022-06-08 23:00:00', '2022-06-09 00:00:00', NULL, NULL),
-(4, 1, '2022-06-10 07:00:00', '2022-06-10 16:00:00', NULL, NULL);
+(4, 0, '2022-06-10 07:00:00', '2022-06-10 16:00:00', NULL, NULL),
+(5, 0, '2022-06-29 08:00:00', '2022-06-29 17:00:00', NULL, NULL),
+(6, 1, '2022-06-29 08:00:00', '2022-06-29 17:00:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -99,12 +120,18 @@ CREATE TABLE `presensi` (
 --
 
 INSERT INTO `presensi` (`users_id`, `periode_idperiode`, `status`, `jam_absen_masuk`, `jam_absen_keluar`, `notif`) VALUES
-(9, 3, 'Hadir', '2022-06-08 22:05:15', '2022-06-09 03:00:00', 0),
-(9, 4, 'Tidak Hadir', NULL, NULL, 0),
-(10, 3, 'Sakit', NULL, NULL, 0),
-(10, 4, 'Tidak Hadir', NULL, NULL, 0),
-(11, 3, 'Tidak Hadir', NULL, NULL, 0),
-(11, 4, 'Tidak Hadir', NULL, NULL, 0);
+(9, 3, 'Hadir', '2022-06-08 22:05:15', '2022-06-09 03:00:00', 1),
+(9, 4, 'Tidak Hadir', NULL, NULL, 1),
+(9, 5, 'Tidak Hadir', NULL, NULL, 1),
+(9, 6, 'Tidak Hadir', NULL, NULL, 1),
+(10, 3, 'Sakit', NULL, NULL, 1),
+(10, 4, 'Tidak Hadir', NULL, NULL, 1),
+(10, 5, 'Tidak Hadir', NULL, NULL, 1),
+(10, 6, 'Tidak Hadir', NULL, NULL, 1),
+(11, 3, 'Tidak Hadir', NULL, NULL, 1),
+(11, 4, 'Tidak Hadir', NULL, NULL, 1),
+(11, 5, 'Tidak Hadir', NULL, NULL, 1),
+(11, 6, 'Tidak Hadir', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -193,7 +220,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`

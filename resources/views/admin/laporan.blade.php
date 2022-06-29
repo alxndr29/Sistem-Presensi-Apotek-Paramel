@@ -25,11 +25,11 @@
                                 @if($start != null && $end != null)
                                 <h2>Laporan<small>Data Untuk Periode {{$start}} sd {{$end}}</small></h2>
                                 @else
-                                    @if ($periode == null)
-                                     <h2>Laporan<small></small></h2>
-                                    @else
-                                    <h2>Laporan<small>Data Untuk Periode Aktif Saat Ini {{$periode->jam_mulai}} sd {{$periode->jam_akhir}}</small></h2>
-                                    @endif
+                                @if ($periode == null)
+                                <h2>Laporan<small></small></h2>
+                                @else
+                                <h2>Laporan<small>Data Untuk Periode Aktif Saat Ini {{$periode->jam_mulai}} sd {{$periode->jam_akhir}}</small></h2>
+                                @endif
                                 @endif
                             </div>
                             <div class="p-2">
@@ -164,7 +164,7 @@
                                                 <th>No</th>
                                                 <th>Nama</th>
                                                 <th> Total Ketidakhadiran </th>
-                                                <th> Reset </th>
+                                                <!-- <th> Reset </th> -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -177,14 +177,14 @@
                                                     @else
                                                 <td>{{$value->totaltidakhadir}}</th>
                                                     @endif
-                                                <td>
+                                                    <!-- <td>
                                                     <form method="post" action="{{route('admin.resetnotifikasi',['id' => $value->userid])}}" onSubmit="if(!confirm('Notifikasi akan direset menjadi 0?')){return false;}">
                                                         @csrf
                                                         <button type="submit" class="btn btn-primary">
                                                             Reset Notifikasi
                                                         </button>
                                                     </form>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -197,8 +197,15 @@
             </div>
         </div>
     </div>
-    <div class="card-footer" id="export-container">
-
+    <div class="card-footer d-flex flex-row" id="export-container">
+        <div>
+            <form method="post" action="{{route('admin.resetnotifikasi',['id' =>'0'])}}" onSubmit="if(!confirm('Notifikasi akan direset menjadi 0?')){return false;}">
+                @csrf
+                <button type="submit" class="btn btn-primary">
+                    Reset Notifikasi
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 
