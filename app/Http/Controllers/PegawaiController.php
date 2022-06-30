@@ -11,6 +11,8 @@ class PegawaiController extends Controller
     //
     public function index()
     {
+        $lokasi = DB::table('lokasi')->first();
+       
         $tombol_absen = true;
         $periode_presensi = DB::table('periode')->where('aktif', 1)->first();
         $newtimestamp = null;
@@ -29,7 +31,7 @@ class PegawaiController extends Controller
                 $tombol_absen = false;
             }
         }
-        return view('pegawai.index', compact('periode_presensi', 'batas_absen', 'tombol_absen', 'status_presensi'));
+        return view('pegawai.index', compact('periode_presensi', 'batas_absen', 'tombol_absen', 'status_presensi','lokasi'));
     }
     public function presensiMasuk()
     {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 28, 2022 at 03:13 AM
+-- Generation Time: Jun 30, 2022 at 01:18 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -39,6 +39,25 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lokasi`
+--
+
+CREATE TABLE `lokasi` (
+  `latitude` varchar(45) DEFAULT NULL,
+  `longitude` varchar(45) DEFAULT NULL,
+  `minimal_jarak` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `lokasi`
+--
+
+INSERT INTO `lokasi` (`latitude`, `longitude`, `minimal_jarak`) VALUES
+('-10.170268929003289', '123.60756397247316', 10);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -47,6 +66,14 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2019_08_19_000000_create_failed_jobs_table', 1);
 
 -- --------------------------------------------------------
 
@@ -103,8 +130,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `foto`, `deleted_at`) VALUES
-(2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', NULL, '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL),
-(12, 'Pegawai Satu', 'satu@satu.com', NULL, '$2y$10$7P1dm7Hjxs/A7WU.ZKzRlu9QTJrpafUzKqsw1Hym7S/7o0i8HgLWC', NULL, '2022-06-28 02:07:04', '2022-06-28 02:07:04', 'pegawai', NULL, NULL);
+(2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', 'Rr1MVaxFECUI8kuysVGAQEZWKDaYWFZzn7PTwQEnXth0cIPMOQu3VWtT4y1k', '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -157,19 +183,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

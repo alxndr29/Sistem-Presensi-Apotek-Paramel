@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 29, 2022 at 04:37 PM
+-- Generation Time: Jun 30, 2022 at 01:22 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -98,7 +98,8 @@ INSERT INTO `periode` (`idperiode`, `aktif`, `jam_mulai`, `jam_akhir`, `created_
 (3, 0, '2022-06-08 23:00:00', '2022-06-09 00:00:00', NULL, NULL),
 (4, 0, '2022-06-10 07:00:00', '2022-06-10 16:00:00', NULL, NULL),
 (5, 0, '2022-06-29 08:00:00', '2022-06-29 17:00:00', NULL, NULL),
-(6, 1, '2022-06-29 08:00:00', '2022-06-29 17:00:00', NULL, NULL);
+(6, 0, '2022-06-29 08:00:00', '2022-06-29 17:00:00', NULL, NULL),
+(7, 1, '2022-06-30 21:00:00', '2022-06-30 23:00:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -124,14 +125,17 @@ INSERT INTO `presensi` (`users_id`, `periode_idperiode`, `status`, `jam_absen_ma
 (9, 4, 'Tidak Hadir', NULL, NULL, 1),
 (9, 5, 'Tidak Hadir', NULL, NULL, 1),
 (9, 6, 'Tidak Hadir', NULL, NULL, 1),
+(9, 7, 'Hadir', '2022-06-30 20:11:40', '2022-06-30 20:15:05', 1),
 (10, 3, 'Sakit', NULL, NULL, 1),
 (10, 4, 'Tidak Hadir', NULL, NULL, 1),
 (10, 5, 'Tidak Hadir', NULL, NULL, 1),
 (10, 6, 'Tidak Hadir', NULL, NULL, 1),
+(10, 7, 'Tidak Hadir', NULL, NULL, 1),
 (11, 3, 'Tidak Hadir', NULL, NULL, 1),
 (11, 4, 'Tidak Hadir', NULL, NULL, 1),
 (11, 5, 'Tidak Hadir', NULL, NULL, 1),
-(11, 6, 'Tidak Hadir', NULL, NULL, 1);
+(11, 6, 'Tidak Hadir', NULL, NULL, 1),
+(11, 7, 'Tidak Hadir', NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -158,7 +162,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`, `foto`, `deleted_at`) VALUES
-(2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', 'lEJXvGtwUSfZM1YfBT4UpsvWAwlPfGrzmI6J3vz4SphIX4bbi95FPwM7VoO4', '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL),
+(2, 'Admin', 'admin@admin.com', NULL, '$2y$10$FJiaX5YomWt64G2ObKVfguWpugEbTafMMEnPiS2Ohy.E1tZZhoVUm', 'Rr1MVaxFECUI8kuysVGAQEZWKDaYWFZzn7PTwQEnXth0cIPMOQu3VWtT4y1k', '2022-05-31 14:54:46', '2022-05-31 14:54:46', 'admin', NULL, NULL),
 (9, 'Pegawai Satu', 'satu@satu.com', NULL, '$2y$10$3SPHdtErMTtJJ0z/OGFep.FoM6gnrBVt0Dq8NwHYT73Ih29lZaM3m', NULL, '2022-06-08 14:02:02', '2022-06-08 14:02:02', 'pegawai', NULL, NULL),
 (10, 'Pegawai Dua', 'dua@dua.com', NULL, '$2y$10$VlpxPSy2AdFgU4ETACFE1e0KTheTVMJlESDtFNCVYNC6DckcjPwUS', NULL, '2022-06-08 14:02:17', '2022-06-08 14:02:25', 'pegawai', NULL, NULL),
 (11, 'Pegawai Tiga', 'tiga@tiga.com', NULL, '$2y$10$r9zy3cb6odwjrJ0IuwMj7e/xfwI2z.p2rFoOj7.N1GBcJNyNstATa', NULL, '2022-06-08 14:02:50', '2022-06-08 14:02:50', 'pegawai', NULL, NULL);
@@ -220,7 +224,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idperiode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
