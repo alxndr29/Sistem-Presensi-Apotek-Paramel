@@ -58,20 +58,20 @@
                 </div>
                 <div class="row">
                     @if($periode_presensi != null)
-                        @if( $status_presensi->status == "Hadir")
-                            @if($status_presensi->jam_absen_keluar == null)
-                                <h3 class="mx-auto"> Anda Tercatat Hadir </h3>
-                                <a href="{{route('pegawai.presensikeluar')}}" class="btn btn-primary mx-auto">KELUAR</a>
-                            @else
-                                <h3 class="mx-auto text-center">Sudah Melakukan Presensi Keluar</h3>
-                            @endif
-                        @else
-                            @if($tombol_absen == true)
-                                <a href="{{route('pegawai.presensimasuk')}}" id="btnabsen" class="btn btn-primary mx-auto disabled">ABSEN</a>
-                            @else
-                                <a href="{{route('pegawai.presensimasuk')}}" id="btnabsen" class="btn btn-primary mx-auto disabled">ABSEN</a>
-                            @endif
-                        @endif
+                    @if( $status_presensi->status == "Hadir")
+                    @if($status_presensi->jam_absen_keluar == null)
+                    <h3 class="mx-auto"> Anda Tercatat Hadir </h3>
+                    <a href="{{route('pegawai.presensikeluar')}}" class="btn btn-primary mx-auto">KELUAR</a>
+                    @else
+                    <h3 class="mx-auto text-center">Sudah Melakukan Presensi Keluar</h3>
+                    @endif
+                    @else
+                    @if($tombol_absen == true)
+                    <a href="{{route('pegawai.presensimasuk')}}" id="btnabsen" class="btn btn-primary mx-auto disabled">ABSEN</a>
+                    @else
+                    <a href="{{route('pegawai.presensimasuk')}}" id="btnabsen" class="btn btn-primary mx-auto disabled">ABSEN</a>
+                    @endif
+                    @endif
                     @endif
                 </div>
                 <div class="row">
@@ -114,9 +114,8 @@
 
         var jarak = jarakKeTujuan("{{$lokasi->latitude}}", "{{$lokasi->longitude}}", latitudePegawai, longitudePegawai);
 
-        if (jarakKeTujuan < "{{$lokasi->minimal_jarak}}") {
+        if (parseInt(jarak) > parseInt("{{$lokasi->minimal_jarak}}")) {
             console.log('jauh ga bisa absen');
-            // $("#btnabsen").prop("disabled", true);
             $('#btnabsen').addClass("disabled");
         } else {
             console.log('mntp bisa absen');

@@ -167,7 +167,7 @@
         if (start == null || end == null) {
             alert('harap mengisi data tanggal dengan benar');
         } else {
-            location.href = "{{url('laporan/pegawai')}}/" + "{{$id}}/" + start + "/" + end;
+            location.href = "{{url('detail/pegawai')}}/" + "{{$id}}/" + start + "/" + end;
         }
     });
 </script>
